@@ -1,0 +1,35 @@
+version: '3.8'
+
+services:
+  db:
+    image: postgres:15-alpine
+    container_name: alpine_tracker_db
+    environment:
+      POSTGRES_USER: alpine_user
+      POSTGRES_PASSWORD: alpine_pass
+      POSTGRES_DB: alpine_tracker
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U alpine_user -d alpine_tracker"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  app:
+    build: .
+    container_name: alpine_tracker_app
+    environment:
+      DATABASE_URL: postgresql://postgres:5428@db:5432/alpine_tracker
+    ports:
+      - "8000:8000"
+    depends_on:
+      db:
+        condition: service_healthy
+    volumes:
+      - .:/app
+
+volumes:
+  postgres_data:
