@@ -5,8 +5,8 @@ services:
     image: postgres:15-alpine
     container_name: alpine_tracker_db
     environment:
-      POSTGRES_USER: alpine_user
-      POSTGRES_PASSWORD: alpine_pass
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: 5428
       POSTGRES_DB: alpine_tracker
     ports:
       - "5432:5432"
