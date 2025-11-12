@@ -6,7 +6,7 @@ from app.models import DifficultyLevel, ExperienceLevel, AscentStatus
 # Mountain Schemas
 class MountainBase(BaseModel):
     name: str = Field(..., description="Название горы")
-    height: int = Field(..., gt=0, description="Высота в метрах")
+    height: int = Field(..., description="Высота в метрах")
     location: str = Field(..., description="Местоположение")
     difficulty: DifficultyLevel = Field(..., description="Уровень сложности")
 
