@@ -2,9 +2,7 @@ from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from app.database import engine, Base
 from app.routes import mountains, climbers, groups, ascents
-
-# Создаем таблицы в БД
-Base.metadata.create_all(bind=engine)
+import os
 
 app = FastAPI(
     title="Alpine Tracker API",
@@ -27,7 +25,6 @@ app.include_router(climbers.router)
 app.include_router(groups.router)
 app.include_router(ascents.router)
 
-
 @app.get("/")
 def root():
     return {
@@ -36,7 +33,14 @@ def root():
         "redoc": "/redoc"
     }
 
-
 @app.get("/health")
 def health_check():
     return {"status": "healthy"}
+
+# Создаем таблицы только при старте приложения (НЕ при тестах!)
+@app.on_event("startup")
+def startup_event():
+    """Создание таблиц при старте приложения"""
+    # Проверяем, что мы НЕ в тестовом режиме
+    if os.getenv("TESTING") != "1":
+        Base.metadata.create_all(bind=engine)

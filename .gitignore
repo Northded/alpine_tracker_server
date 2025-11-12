@@ -29,7 +29,9 @@ wheels/
 *.swp
 *.swo
 *~
-
+.coverage
+coverage.xml
+test-results.xml
 # Environment
 .env
 
