@@ -1,0 +1,1 @@
+SELECT id, name FROM mountains WHERE height > 8000;
