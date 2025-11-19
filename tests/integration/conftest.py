@@ -12,7 +12,7 @@ from app.main import app
 
 @pytest.fixture(scope="function")
 def test_db():
-    """Создание in-memory тестовой БД для интеграционных тестов"""
+    """Создание тестовой БД для интеграционных тестов"""
     database_url = "sqlite:///:memory:"
     
     engine = create_engine(
