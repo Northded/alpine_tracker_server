@@ -30,8 +30,8 @@ class AscentStatus(str, enum.Enum):
 group_climbers = Table(
     'group_climbers',
     Base.metadata,
-    Column('group_id', Integer, ForeignKey('groups.id', ondelete='CASCADE')),
-    Column('climber_id', Integer, ForeignKey('climbers.id', ondelete='CASCADE'))
+    Column('group_id', Integer, ForeignKey('groups.id', ondelete='CASCADE'), primary_key=True),
+    Column('climber_id', Integer, ForeignKey('climbers.id', ondelete='CASCADE'), primary_key=True)
 )
 
 
@@ -43,7 +43,7 @@ class Mountain(Base):
     height = Column(Integer, nullable=False)
     location = Column(String, nullable=False)
     difficulty = Column(SQLEnum(DifficultyLevel), nullable=False)
-
+    elevation = Column(Integer, nullable=True)
     created_at = Column(DateTime, default=datetime.utcnow, nullable=True)
 
     ascents = relationship("Ascent", back_populates="mountain", cascade="all, delete-orphan")
