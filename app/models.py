@@ -1,4 +1,5 @@
-from sqlalchemy import Column, Integer, String, Float, Date, ForeignKey, Table, Enum as SQLEnum
+from datetime import datetime
+from sqlalchemy import Column, DateTime, Integer, String, Float, Date, ForeignKey, Table, Enum as SQLEnum
 from sqlalchemy.orm import relationship
 from app.database import Base
 import enum
@@ -43,6 +44,8 @@ class Mountain(Base):
     location = Column(String, nullable=False)
     difficulty = Column(SQLEnum(DifficultyLevel), nullable=False)
 
+    created_at = Column(DateTime, default=datetime.utcnow, nullable=True)
+
     ascents = relationship("Ascent", back_populates="mountain", cascade="all, delete-orphan")
 
 
@@ -80,3 +83,12 @@ class Ascent(Base):
 
     mountain = relationship("Mountain", back_populates="ascents")
     group = relationship("Group", back_populates="ascents")
+
+class Equipment(Base):
+    __tablename__ = 'equipment'
+
+    id = Column(Integer, primary_key=True, index=True)
+    name = Column(String, nullable=False)
+    equipment_type = Column(String, nullable=False)
+    condition = Column(String, nullable=True)
+    purchase_date = Column(Date, nullable=True)
