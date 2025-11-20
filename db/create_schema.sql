@@ -1,8 +1,9 @@
+-- Create ENUM types with English values
+CREATE TYPE difficultylevel AS ENUM ('Low', 'Medium', 'High', 'Extreme');
+CREATE TYPE experiencelevel AS ENUM ('Beginner', 'Amateur', 'Experienced', 'Professional');
+CREATE TYPE ascentstatus AS ENUM ('Planned', 'InProgress', 'Completed', 'Cancelled');
 
-CREATE TYPE difficultylevel AS ENUM ('Низкая', 'Средняя', 'Высокая', 'Экстремальная');
-CREATE TYPE experiencelevel AS ENUM ('Новичок', 'Любитель', 'Опытный', 'Профессионал');
-CREATE TYPE ascentstatus AS ENUM ('Запланировано', 'В процессе', 'Завершено', 'Отменено');
-
+-- Create mountains table
 CREATE TABLE mountains (
     id SERIAL PRIMARY KEY,
     name VARCHAR NOT NULL UNIQUE,
@@ -11,6 +12,7 @@ CREATE TABLE mountains (
     difficulty difficultylevel NOT NULL
 );
 
+-- Create climbers table
 CREATE TABLE climbers (
     id SERIAL PRIMARY KEY,
     name VARCHAR NOT NULL,
@@ -18,12 +20,14 @@ CREATE TABLE climbers (
     nationality VARCHAR NOT NULL
 );
 
+-- Create groups table
 CREATE TABLE groups (
     id SERIAL PRIMARY KEY,
     name VARCHAR NOT NULL UNIQUE,
     formation_date DATE NOT NULL
 );
 
+-- Create ascents table
 CREATE TABLE ascents (
     id SERIAL PRIMARY KEY,
     mountain_id INTEGER NOT NULL,
@@ -37,6 +41,7 @@ CREATE TABLE ascents (
         REFERENCES groups(id) ON DELETE CASCADE
 );
 
+-- Create group_climbers table
 CREATE TABLE group_climbers (
     group_id INTEGER NOT NULL,
     climber_id INTEGER NOT NULL,
@@ -47,9 +52,9 @@ CREATE TABLE group_climbers (
         REFERENCES climbers(id) ON DELETE CASCADE
 );
 
+-- Create indexes
 CREATE INDEX ix_mountains_id ON mountains(id);
 CREATE INDEX ix_mountains_name ON mountains(name);
 CREATE INDEX ix_climbers_id ON climbers(id);
 CREATE INDEX ix_groups_id ON groups(id);
-CREATE INDEX ix_groups_name ON groups(name);
 CREATE INDEX ix_ascents_id ON ascents(id);
