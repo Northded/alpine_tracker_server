@@ -1,9 +1,9 @@
 from datetime import datetime
-from sqlalchemy import Column, DateTime, Integer, String, Float, Date, ForeignKey, Table, Enum as SQLEnum
+from sqlalchemy import DateTime, Column, Integer, String, Float, Date, ForeignKey, Table, Enum as SQLEnum
 from sqlalchemy.orm import relationship
 from app.database import Base
 import enum
-
+from datetime import datetime
 
 class DifficultyLevel(str, enum.Enum):
     LOW = "Низкая"
